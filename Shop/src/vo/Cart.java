@@ -1,8 +1,8 @@
 package vo;
 
 public class Cart {
-	String userId; // 구입한 유저 id
-	String itemName; // 구입한 아이템
+	private String userId; // 구입한 유저 id
+	private String itemName; // 구입한 아이템
 	public Cart(String userId, String itemName) {
 		this.userId = userId;
 		this.itemName = itemName;

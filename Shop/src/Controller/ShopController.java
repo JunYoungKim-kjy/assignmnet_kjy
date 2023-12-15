@@ -1,14 +1,17 @@
 package Controller;
 
 import Utils.InputManager;
+import dao.CartDAO;
 import dao.ItemDAO;
 import dao.UserDAO;
 
 public class ShopController {
 	UserDAO uDAO;
 	ItemDAO iDAO;
+	CartDAO cDAO;
 	
 	public ShopController(){
+		cDAO = new CartDAO();
 		uDAO = new UserDAO();
 		iDAO = new ItemDAO();
 	}
@@ -22,7 +25,7 @@ public class ShopController {
 			} else if (sel == 1) {//가입
 				uDAO.insertUser();
 			} else if (sel == 2) {//탈퇴
-
+				uDAO.exitUser(cDAO);
 			} else if (sel == 3) {//로그인
 
 			} else if (sel == 4) {//로그아웃
