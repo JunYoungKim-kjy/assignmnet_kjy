@@ -12,7 +12,6 @@ public class 클배장바구니2 {
 	public static void main(String[] args) {
 
 		String[] userIdList = { "admin", "aaa", "bbb", "ccc" };
-
 		String[] itemNameList = { "사과", "칸초", "귤", "감" };
 		int[] itemPriceList = { 10000, 2000, 6500, 3300 };
 
@@ -28,9 +27,7 @@ public class 클배장바구니2 {
 		Item[] itemList = new Item[max];
 		int itemSize = 0;
 		for (int i = 0; i < itemNameList.length; i++) {
-			itemList[i] = new Item();
-			itemList[i].name = itemNameList[i];
-			itemList[i].price = itemPriceList[i];
+			itemList[i] = new Item(itemNameList[i],itemPriceList[i]);
 			itemSize += 1;
 		}
 
@@ -90,7 +87,7 @@ public class 클배장바구니2 {
 					for (Item i : itemList) {
 						if (i == null)
 							break;
-						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.name, i.price);
+						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.getName(), i.getPrice());
 					}
 					while (true) {
 						System.out.println("추가 아이템 이름 0(종료)>> ");
@@ -106,7 +103,7 @@ public class 클배장바구니2 {
 						for (Item i : itemList) {
 							if (i == null)
 								break;
-							if (i.name.equals(name)) {
+							if (i.getName().equals(name)) {
 								check = true;
 								break;
 							}
@@ -124,9 +121,7 @@ public class 클배장바구니2 {
 							continue;
 						}
 
-						Item item = new Item();
-						item.name = name;
-						item.price = price;
+						Item item = new Item(name,price);
 
 						itemList[itemSize] = item;
 						itemSize += 1;
@@ -140,7 +135,7 @@ public class 클배장바구니2 {
 					for (Item i : itemList) {
 						if (i == null)
 							break;
-						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.name, i.price);
+						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.getName(), i.getPrice());
 					}
 
 					System.out.println("삭제 아이템 이름 >> ");
@@ -148,7 +143,7 @@ public class 클배장바구니2 {
 					String name = sc.next();
 					idx = -1;
 					for (int i = 0; i < itemSize; i += 1) {
-						if (name.equals(itemList[i].name)) {
+						if (name.equals(itemList[i].getName())) {
 							idx = i;
 							break;
 						}
@@ -173,7 +168,7 @@ public class 클배장바구니2 {
 					}
 					System.out.printf("%s %s %n", "회원아이디", "상품 이름");
 					for (int i = cartSize - 1; i >= 0; i -= 1) {
-						System.out.printf("(%d) %s %s %n", cartSize - 1 - i, cartList[i].userId, cartList[i].itemName);
+						System.out.printf("(%d) %s %s %n", cartSize - 1 - i, cartList[i].getUserId(), cartList[i].getItemName());
 					}
 
 				}
@@ -183,7 +178,7 @@ public class 클배장바구니2 {
 					for (Item i : itemList) {
 						if (i == null)
 							break;
-						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.name, i.price);
+						System.out.printf("(%d) %s %d원 %n", 1 + idx++, i.getName(), i.getPrice());
 					}
 					System.out.println("============");
 
@@ -197,13 +192,11 @@ public class 클배장바구니2 {
 							System.out.println("번호 범위 오류 ");
 							continue;
 						}
-						Cart c = new Cart();
-						c.userId = logUser.id;
-						c.itemName = itemList[idx].name;
+						Cart c = new Cart(logUser.id,itemList[idx].getName());
 
 						cartList[cartSize] = c;
 						cartSize += 1;
-						System.out.printf("%s 주문 완료 %n", itemList[idx].name);
+						System.out.printf("%s 주문 완료 %n", itemList[idx].getName());
 					}
 
 				} else if (sel == 2) { // 주문확인
@@ -213,11 +206,11 @@ public class 클배장바구니2 {
 					int cnt = 0;
 					for (Cart c : cartList) {
 						if (c == null) break;
-						if (c.userId.equals(logUser.id)) {
+						if (c.getUserId().equals(logUser.id)) {
 							for (int i = 0; i < itemSize; i += 1) {
-								if (c.itemName.equals(itemList[i].name)) {
+								if (c.getItemName().equals(itemList[i].getName())) {
 									itemCnt[i] += 1;
-									total += itemList[i].price;
+									total += itemList[i].getPrice();
 									cnt += 1;
 								}
 							}
@@ -234,7 +227,7 @@ public class 클배장바구니2 {
 					int num = 1;
 					for (int i = 0; i < itemSize; i += 1) {
 						if (itemCnt[i] > 0) {
-							System.out.printf(" %3d) %s %10d원 %3d개 %n", num++, itemList[i].name, itemList[i].price,
+							System.out.printf(" %3d) %s %10d원 %3d개 %n", num++, itemList[i].getName(), itemList[i].getPrice(),
 									itemCnt[i]);
 						}
 					}
@@ -244,7 +237,7 @@ public class 클배장바구니2 {
 				} else if (sel == 3) { // 탈퇴 할때 그 회원 주문서 동시에 삭제되야함
 
 					for (int i = 0; i < cartSize; i += 1) {
-						if (logUser.id.equals(cartList[i].userId)) {
+						if (logUser.id.equals(cartList[i].getUserId())) {
 
 							for (int k = i; k < cartSize - 1; k += 1) {
 								cartList[k] = cartList[k + 1];
