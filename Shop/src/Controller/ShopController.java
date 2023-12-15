@@ -18,6 +18,7 @@ public class ShopController {
 		uDAO = new UserDAO();
 		iDAO = new ItemDAO();
 		fm = new FileManager();
+		fm.loadData(cDAO, uDAO, iDAO);
 	}
 
 	public void run() {
@@ -33,12 +34,29 @@ public class ShopController {
 			}else if(sel == 1) { //쇼핑
 				iDAO.shopping(log,cDAO);
 			}else if(sel == 2) { //장바구니목룍
-				
+				myPage();
 			}
 		}
 	}
+	private void myPage() {
+		printMyPageMenu();
+		int sel = InputManager.getValue("메뉴입력", 0, 3);
+		if(sel == 0) {
+			System.out.println("뒤로가기");
+			return;
+		}else if(sel == 1) { //내 장바구니
+			cDAO.myCartList(log);
+		}else if(sel == 2) { //삭제
+			cDAO.deleteMyCartList(log);
+		}else if(sel == 3) { //구입
+			
+		}
+	}
+	
 	private void menu() {
 		while (true) {
+			System.out.println("자동 저장 완료");
+			fm.saveData(cDAO, uDAO, iDAO);
 			int sel = InputManager.getValue("메뉴입력", 0, 100);
 			if (sel == 0) {// 종료
 				System.out.println("종료");
@@ -48,8 +66,8 @@ public class ShopController {
 			} else if (sel == 2) {// 탈퇴
 				uDAO.exitUser(cDAO);
 			} else if (sel == 3) {// 로그인
-				printLoginMenu();
 				log = uDAO.login();
+				printLoginMenu();
 				loginMenu();
 			} else if (sel == 4) {// 로그아웃
 
@@ -80,8 +98,7 @@ public class ShopController {
 	private void printMyPageMenu() {
 		System.out.println("[1.내 장바구니]");
 		System.out.println("[2.삭제]");
-		System.out.println("[3.장바구니관리]");
-		System.out.println("[4.마이페이지]");
+		System.out.println("[3.구입]");
 		System.out.println("[0.뒤로가기]");
 	}
 	private void printAdminMenu() {

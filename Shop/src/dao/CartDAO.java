@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 
 import vo.Cart;
+import vo.Item;
 import vo.User;
 
 public class CartDAO {
@@ -10,13 +11,35 @@ public class CartDAO {
 	public CartDAO(){
 		cartList = new ArrayList<Cart>();
 	}
-	public void deleteAllCartListByOneUser(User user) {
+	public void deleteAllCartListByOneUser(String id) {
 		for(int i=0; i < cartList.size(); i+=1) {
-			if(cartList.get(i).getUserId().equals(user.getId())) {
+			if(cartList.get(i).getUserId().equals(id)) {
 				cartList.remove(i);
 				i-=1;
 			}
 		}
+	}
+	public void addCartData(String id,String name) {
+		Cart c = new Cart(id,name);
+		cartList.add(c);
+	}
+	private ArrayList<Cart> getMyCartList(User user) {
+		ArrayList<Cart> myList = new ArrayList<Cart>();
+		for(Cart list :cartList) {
+			if(list.getUserId().equals(user.getId())) {
+				myList.add(list);
+			}
+		}
+		return myList;
+	}
+	public void myCartList(User user) {
+		System.out.println(user.getName() + "님의 장바구니 목록");
+		for(Cart list :cartList) {
+			if(list.getUserId().equals(user.getId())) {
+				System.out.println(list);
+			}
+		}
+		System.out.println("=============================");
 	}
 	public String getData() {
 		String data = "";
@@ -24,6 +47,13 @@ public class CartDAO {
 			data += list.getData();
 		}
 		return data;
+	}
+	public void deleteMyCartList(User user) {
+		ArrayList<Cart> myList = getMyCartList(user);
+		if(myList.size() == 0) {
+			System.out.println("장바구니가 비어있습니다.");
+		}
+		
 	}
 	public void loadDataFromFile(String data) {
 		String temp[] = data.split("\n");

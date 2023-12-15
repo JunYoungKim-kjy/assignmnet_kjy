@@ -10,10 +10,11 @@ public class Item {
 	public String toString() {
 		return  name + ", " + price + "원, category=[" + category + "]";
 	}
-	public Item(String name, int price) {
+	public Item(String name, int price,String category) {
 		 super();
 		 this.name = name;
 		 this.price = price;
+		 this.category = category;
 	 }
 	public String getData() {
 		return "%s/%d/%s\n".formatted(name,price,category);

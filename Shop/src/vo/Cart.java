@@ -13,6 +13,10 @@ public class Cart {
 	public String getUserId() {
 		return userId;
 	}
+	@Override
+	public String toString() {
+		return itemName;
+	}
 	public String getItemName() {
 		return itemName;
 	}

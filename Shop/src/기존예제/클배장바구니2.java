@@ -27,7 +27,7 @@ public class 클배장바구니2 {
 		Item[] itemList = new Item[max];
 		int itemSize = 0;
 		for (int i = 0; i < itemNameList.length; i++) {
-			itemList[i] = new Item(itemNameList[i],itemPriceList[i]);
+			itemList[i] = new Item(itemNameList[i],itemPriceList[i],null);
 			itemSize += 1;
 		}
 
@@ -121,7 +121,7 @@ public class 클배장바구니2 {
 							continue;
 						}
 
-						Item item = new Item(name,price);
+						Item item = new Item(name,price,null);
 
 						itemList[itemSize] = item;
 						itemSize += 1;

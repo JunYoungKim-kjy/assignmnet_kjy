@@ -15,34 +15,38 @@ public class FileManager {
 	// item.txt
 	String CUR_PATH = System.getProperty("user.dir") + "\\src\\"+ getClass().getPackageName()+"\\"; 
 	File file;
-	private void loadData(CartDAO cDAO,UserDAO uDAO,ItemDAO iDAO) {
+	public void loadData(CartDAO cDAO,UserDAO uDAO,ItemDAO iDAO) {
 		String cartData = loadFromFile("cart.txt");
 		String userData = loadFromFile("user.txt");
 		String itemData = loadFromFile("item.txt");
-		
-		cDAO.loadDataFromFile(cartData);
-		uDAO.loadDataFromFile(userData);
-		iDAO.loadDataFromFile(itemData);
+		if(cartData != null) {
+			cDAO.loadDataFromFile(cartData);
+		}
+		if(userData != null) {
+			uDAO.loadDataFromFile(userData);
+		}
+		if(itemData != null) {
+			iDAO.loadDataFromFile(itemData);
+		}
 	}
-	public void saveDataTofile(CartDAO cDAO,UserDAO uDAO,ItemDAO iDAO) {
+	public void saveData(CartDAO cDAO,UserDAO uDAO,ItemDAO iDAO) {
 		String cartData = cDAO.getData();
 		String userData = uDAO.getData();
 		String itemData = iDAO.getData();
-		
-		saveData("cart.txt", cartData);
-		saveData("user.txt", userData);
-		saveData("item.txt", itemData);
+//		System.out.println(cartData);
+//		System.out.println(userData);
+//		System.out.println(itemData);
+		saveDataToFile("cart.txt", cartData);
+		saveDataToFile("user.txt", userData);
+		saveDataToFile("item.txt", itemData);
 	}
-	private void saveData(String fileName,String data) {
-		try {
-			FileWriter fw = new FileWriter(CUR_PATH + fileName);
+	private void saveDataToFile(String fileName,String data) {
+		try (FileWriter fw = new FileWriter(CUR_PATH + fileName)){
 			fw.write(data);
-			System.out.println(fileName + "save 성공");
+			System.out.println("저장성공");
 		} catch (IOException e) {
-			System.out.println(fileName + "save 실패");
+			System.out.println("저장실패");
 		}
-			
-		
 	}
 	private String loadFromFile(String fileName) {
 		String data = "";
@@ -59,6 +63,9 @@ public class FileManager {
 			System.out.println(fileName + "로드 성공"); 
 		} catch (IOException e) {
 			System.out.println(fileName + "로드 실패");
+		}
+		if(data.isEmpty()) {
+			return null;
 		}
 		data = data.substring(0,data.length()-1);
 		return data;

@@ -50,7 +50,7 @@ public class UserDAO {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 			return;
 		}
-		cDAO.deleteAllCartListByOneUser(user);
+		cDAO.deleteAllCartListByOneUser(user.getId());
 		userList.remove(user);
 		System.out.println(user.getName() +"님 회원탈퇴 완료");
 		
