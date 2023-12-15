@@ -43,7 +43,7 @@ public class FileManager {
 	private void saveDataToFile(String fileName,String data) {
 		try (FileWriter fw = new FileWriter(CUR_PATH + fileName)){
 			fw.write(data);
-			System.out.println("저장성공");
+//			System.out.println("저장성공");
 		} catch (IOException e) {
 			System.out.println("저장실패");
 		}

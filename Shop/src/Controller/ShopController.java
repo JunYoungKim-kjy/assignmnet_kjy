@@ -45,17 +45,17 @@ public class ShopController {
 			System.out.println("뒤로가기");
 			return;
 		}else if(sel == 1) { //내 장바구니
-			cDAO.myCartList(log);
+			cDAO.printMyList(log);
 		}else if(sel == 2) { //삭제
 			cDAO.deleteMyCartList(log);
 		}else if(sel == 3) { //구입
-			
+			cDAO.buyItem(log);
 		}
 	}
 	
 	private void menu() {
 		while (true) {
-			System.out.println("자동 저장 완료");
+//			System.out.println("자동 저장 완료");
 			fm.saveData(cDAO, uDAO, iDAO);
 			int sel = InputManager.getValue("메뉴입력", 0, 100);
 			if (sel == 0) {// 종료
@@ -67,19 +67,44 @@ public class ShopController {
 				uDAO.exitUser(cDAO);
 			} else if (sel == 3) {// 로그인
 				log = uDAO.login();
-				printLoginMenu();
-				loginMenu();
+				if(log != null) {
+					printLoginMenu();
+					loginMenu();
+				}
 			} else if (sel == 4) {// 로그아웃
+				if(log==null) {
+					System.out.println("로그인 상태가 아닙니다.");
+					return;
+				}
+				log = null;
+				return;
 
 			} else if (sel == 100) {// 관리자
-
+				if(uDAO.adminlogin()) {
+					adminMenu();
+				}
 			} else {
 				System.out.println("없는 메뉴입니다.");
 				continue;
 			}
 		}
 	}
-
+	private void adminMenu() {
+		printAdminMenu();
+		int sel = InputManager.getValue("[관리자메뉴]메뉴입력", 0, 4);
+		if(sel == 0) {
+			System.out.println("종료");
+			return;
+		}else if(sel == 1) {//아이템관리
+			iDAO.insertItem();
+		}else if(sel == 2) {//카테고리관리
+			iDAO.categoriManager();
+		}else if(sel == 3) {//장바구니관리
+//			basketManager();
+		}else if(sel == 4) {//유저목록관리
+//			userListManager();
+		}
+	}
 	private void printMenu() {
 
 		System.out.println("[1.가입]");

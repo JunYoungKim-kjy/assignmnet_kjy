@@ -63,8 +63,8 @@ public class UserDAO {
 	}
 	public User login() {
 		System.out.println("=====[로그인]=====");
-		String id = InputManager.getValue("[로그인] 아이디입력 	:");
-		String pw = InputManager.getValue("[로그인] 비밀번호입력	:");
+		String id = InputManager.getValue("[로그인] 아이디입력  :");
+		String pw = InputManager.getValue("[로그인] 비밀번호입력 :");
 		User user = getUserById(id);
 		if(user == null || !user.getPw().equals(pw)) {
 			System.out.println("회원정보가 일치하지않습니다.");
@@ -72,6 +72,16 @@ public class UserDAO {
 		}
 		return user;
 	}
+	public boolean adminlogin() {
+		String id = InputManager.getValue("[관리자]아이디입력 :");
+		String pw = InputManager.getValue("[관리자]비밀번호입력:");
+		if(id.equals(userList.get(0).getId()) && pw.equals(userList.get(0).getPw())){
+			return true;
+		}
+		System.out.println("정보가 일치하지 않습니다.");
+		return false;
+	}
+			
 	public String getData() {
 		String data = "";
 		for(User list : userList) {

@@ -31,6 +31,32 @@ public class ItemDAO {
 		}
 		return data;
 	}
+	public void categoriManager() {
+		String cate = InputManager.getValue("[카테관리]카테고리 입력:");
+		for(Item list :itemList) {
+
+		}
+	}
+	private Item getItemByName(String name) {
+		for(Item list : itemList) {
+			if(list.getName().equals(name)) {
+				return list;
+			}
+		}
+		return null;
+	}
+	public void insertItem() {
+		String name = InputManager.getValue("[아이템추가]이름 입력: ");
+		Item item = getItemByName(name);
+		if(item != null) {
+			System.out.println("이미 존재하는 아이템 입니다.");
+			return;
+		}
+		String category = InputManager.getValue("[아이템추가]:카테고리 입력:");
+		int price = InputManager.getValue("[아이템추가]가격 입력: ", 1, 99999);
+		item = new Item(name, price, category);
+		itemList.add(item);
+	}
 	public void loadDataFromFile(String data) {
 		String temp[] = data.split("\n");
 		for(int i=0; i < temp.length; i+=1) {

@@ -25,4 +25,7 @@ public class Item {
 	public int getPrice() {
 		return price;
 	}
+	public String getCate() {
+		return category;
+	}
 }

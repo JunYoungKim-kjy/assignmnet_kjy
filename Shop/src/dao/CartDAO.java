@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 
+import Utils.InputManager;
 import vo.Cart;
 import vo.Item;
 import vo.User;
@@ -32,14 +33,18 @@ public class CartDAO {
 		}
 		return myList;
 	}
-	public void myCartList(User user) {
-		System.out.println(user.getName() + "님의 장바구니 목록");
-		for(Cart list :cartList) {
-			if(list.getUserId().equals(user.getId())) {
-				System.out.println(list);
-			}
+	private void myCartList(ArrayList<Cart> myList, String name) {
+		System.out.println(name + "님의 장바구니 목록");
+		int num =1;
+		for(Cart list :myList) {
+			System.out.print(num++ +" ");
+			System.out.println(list);
 		}
 		System.out.println("=============================");
+	}
+	public void printMyList(User user) {
+		ArrayList<Cart> myList = getMyCartList(user);
+		myCartList(myList, user.getName());
 	}
 	public String getData() {
 		String data = "";
@@ -48,11 +53,34 @@ public class CartDAO {
 		}
 		return data;
 	}
+	public void buyItem(User user) {
+		ArrayList<Cart> myList = getMyCartList(user);
+		if(myList.size() == 0) {
+			System.out.println("장바구니가 비어있습니다.");
+		}
+		myCartList(myList, user.getName());
+		int sel = InputManager.getValue("[구입]번호입력:", 1, myList.size())-1;
+		if(sel == -1 )return;
+		cartList.remove(myList.get(sel));
+		System.out.println(myList.get(sel).getItemName() + "구매 완료");
+	}
 	public void deleteMyCartList(User user) {
 		ArrayList<Cart> myList = getMyCartList(user);
 		if(myList.size() == 0) {
 			System.out.println("장바구니가 비어있습니다.");
 		}
+		int num = 1;
+		for(Cart ml : myList) {
+			System.out.print(num++ + " ");
+			System.out.println(ml);
+		}
+		int sel = InputManager.getValue("[삭제]번호입력:", 1, myList.size())-1;
+		if(sel == -1) {
+			System.out.println("Error");
+			return;
+		}
+		cartList.remove(myList.get(sel));
+		System.out.println(myList.get(sel).getItemName() + "  삭제 완료"); 
 		
 	}
 	public void loadDataFromFile(String data) {
