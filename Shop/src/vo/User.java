@@ -28,6 +28,9 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getData() {
+		return "%s/%s/%s\n".formatted(id,pw,name);
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", pw=" + pw + ", name=" + name + "]";

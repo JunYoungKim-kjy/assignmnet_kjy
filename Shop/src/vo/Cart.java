@@ -7,6 +7,9 @@ public class Cart {
 		this.userId = userId;
 		this.itemName = itemName;
 	}
+	public String getData() {
+		return "%s/%s\n".formatted(userId,itemName);
+	}
 	public String getUserId() {
 		return userId;
 	}

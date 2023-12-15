@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 
 import Utils.InputManager;
+import vo.Cart;
 import vo.User;
 
 public class UserDAO {
@@ -60,4 +61,31 @@ public class UserDAO {
 		}
 		return false;
 	}
+	public User login() {
+		System.out.println("=====[로그인]=====");
+		String id = InputManager.getValue("[로그인] 아이디입력 	:");
+		String pw = InputManager.getValue("[로그인] 비밀번호입력	:");
+		User user = getUserById(id);
+		if(user == null || !user.getPw().equals(pw)) {
+			System.out.println("회원정보가 일치하지않습니다.");
+			return null;
+		}
+		return user;
+	}
+	public String getData() {
+		String data = "";
+		for(User list : userList) {
+			data += list.getData();
+		}
+		return data;
+	}
+	public void loadDataFromFile(String data) {
+		String temp[] = data.split("\n");
+		for(int i=0; i < temp.length; i+=1) {
+			String info[] = temp[i].split("/");
+			User user = new User(info[0], info[1], info[2]);
+			userList.add(user);
+		}
+	}
 }
+

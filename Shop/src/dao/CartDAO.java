@@ -18,4 +18,19 @@ public class CartDAO {
 			}
 		}
 	}
+	public String getData() {
+		String data = "";
+		for(Cart list : cartList) {
+			data += list.getData();
+		}
+		return data;
+	}
+	public void loadDataFromFile(String data) {
+		String temp[] = data.split("\n");
+		for(int i=0; i < temp.length; i+=1) {
+			String info[] = temp[i].split("/");
+			Cart cart = new Cart(info[0], info[1]);
+			cartList.add(cart);
+		}
+	}
 }

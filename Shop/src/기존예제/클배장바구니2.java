@@ -19,7 +19,7 @@ public class 클배장바구니2 {
 		User[] userList = new User[max];
 		int userSize = 0;
 		for (int i = 0; i < userIdList.length; i++) {
-			userList[i] = new User();
+			userList[i] = new User(userIdList[i],userIdList[i],userIdList[i]);
 			userList[i].setId(userIdList[i]);
 			userSize += 1;
 		}
