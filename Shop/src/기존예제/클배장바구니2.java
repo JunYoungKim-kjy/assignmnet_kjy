@@ -20,7 +20,7 @@ public class 클배장바구니2 {
 		int userSize = 0;
 		for (int i = 0; i < userIdList.length; i++) {
 			userList[i] = new User();
-			userList[i].id = userIdList[i];
+			userList[i].setId(userIdList[i]);
 			userSize += 1;
 		}
 
@@ -53,7 +53,7 @@ public class 클배장바구니2 {
 					for (User u : userList) {
 						if (u == null)
 							break;
-						if (id.equals(u.id)) {
+						if (id.equals(u.getId())) {
 							check = true;
 							logUser = u;
 						}
@@ -70,19 +70,19 @@ public class 클배장바구니2 {
 					continue;
 				}
 			} else {
-				if (logUser.id == "admin") {
+				if (logUser.getId() == "admin") {
 					System.out.println("[ 관리자 메뉴 ]");
 					System.out.println("[1] 아이템 추가 [2] 아이템 삭제 [3] 최신순(주문정보) [4] 로그아웃 ");
 				} else {
 					System.out.println("[ 사용자 메뉴 ]");
-					System.out.println("[" + logUser.id + " 로그인]");
+					System.out.println("[" + logUser.getId() + " 로그인]");
 
 					System.out.println(" [1] 쇼핑 [2] 주문확인 [3] 탈퇴(그 회원 주문서 동시에 삭제) [4] 로그아웃");
 				}
 
 				int sel = sc.nextInt();
 
-				if (logUser.id == "admin" && sel == 1) { // 아이템 추가
+				if (logUser.getId() == "admin" && sel == 1) { // 아이템 추가
 					int idx = 0;
 					for (Item i : itemList) {
 						if (i == null)
@@ -130,7 +130,7 @@ public class 클배장바구니2 {
 						break;
 					}
 
-				} else if (logUser.id == "admin" && sel == 2) { // 아이템 삭제
+				} else if (logUser.getId() == "admin" && sel == 2) { // 아이템 삭제
 					int idx = 0;
 					for (Item i : itemList) {
 						if (i == null)
@@ -161,7 +161,7 @@ public class 클배장바구니2 {
 					itemSize -= 1;
 					System.out.println("[아이템 삭제완료]");
 
-				} else if (logUser.id == "admin" && sel == 3) { // 최신순 정렬 (주문정보) : 임시
+				} else if (logUser.getId() == "admin" && sel == 3) { // 최신순 정렬 (주문정보) : 임시
 					if (cartSize == 0) {
 						System.out.println("주문 정보가 없습니다");
 						continue;
@@ -192,7 +192,7 @@ public class 클배장바구니2 {
 							System.out.println("번호 범위 오류 ");
 							continue;
 						}
-						Cart c = new Cart(logUser.id,itemList[idx].getName());
+						Cart c = new Cart(logUser.getId(),itemList[idx].getName());
 
 						cartList[cartSize] = c;
 						cartSize += 1;
@@ -206,7 +206,7 @@ public class 클배장바구니2 {
 					int cnt = 0;
 					for (Cart c : cartList) {
 						if (c == null) break;
-						if (c.getUserId().equals(logUser.id)) {
+						if (c.getUserId().equals(logUser.getId())) {
 							for (int i = 0; i < itemSize; i += 1) {
 								if (c.getItemName().equals(itemList[i].getName())) {
 									itemCnt[i] += 1;
@@ -223,7 +223,7 @@ public class 클배장바구니2 {
 						continue;
 					}
 
-					System.out.println(" ====== " + logUser.id + " 님의 장바구니 ========");
+					System.out.println(" ====== " + logUser.getId() + " 님의 장바구니 ========");
 					int num = 1;
 					for (int i = 0; i < itemSize; i += 1) {
 						if (itemCnt[i] > 0) {
@@ -237,7 +237,7 @@ public class 클배장바구니2 {
 				} else if (sel == 3) { // 탈퇴 할때 그 회원 주문서 동시에 삭제되야함
 
 					for (int i = 0; i < cartSize; i += 1) {
-						if (logUser.id.equals(cartList[i].getUserId())) {
+						if (logUser.getId().equals(cartList[i].getUserId())) {
 
 							for (int k = i; k < cartSize - 1; k += 1) {
 								cartList[k] = cartList[k + 1];
@@ -251,7 +251,7 @@ public class 클배장바구니2 {
 
 					int idx = -1;
 					for (int i = 0; i < userSize; i += 1) {
-						if (logUser.id.equals(userList[i].id)) {
+						if (logUser.getId().equals(userList[i].getId())) {
 							idx = i;
 							break;
 						}

@@ -1,10 +1,17 @@
 package Controller;
 
 import Utils.InputManager;
+import dao.ItemDAO;
+import dao.UserDAO;
 
 public class ShopController {
 	UserDAO uDAO;
 	ItemDAO iDAO;
+	
+	public ShopController(){
+		uDAO = new UserDAO();
+		iDAO = new ItemDAO();
+	}
 	public void run() {
 		while (true) {
 			printMenu();
@@ -13,7 +20,7 @@ public class ShopController {
 				System.out.println("종료");
 				return;
 			} else if (sel == 1) {//가입
-				
+				uDAO.insertUser();
 			} else if (sel == 2) {//탈퇴
 
 			} else if (sel == 3) {//로그인
