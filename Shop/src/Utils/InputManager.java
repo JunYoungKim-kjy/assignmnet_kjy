@@ -13,6 +13,8 @@ public class InputManager {
 		rd = new Random();
 	}
 	public static int getValue(String msg, int start, int end) {
+		System.out.println("[0] 종료");
+		System.out.println("========================");
 		System.out.printf("%s [%d~%d]", msg, start, end);
 		try {
 			int input = sc.nextInt();

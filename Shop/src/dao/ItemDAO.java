@@ -14,6 +14,7 @@ public class ItemDAO {
 	}
 	private boolean hasData() {
 		if(itemList.size() == 0){
+			System.out.println("데이터가 없습니다.");
 			return true;
 		}
 		return false;
@@ -27,6 +28,9 @@ public class ItemDAO {
 	public void shopping(User user, CartDAO cDAO) {
 		printItemList();
 		int sel = InputManager.getValue("[쇼핑]번호선택", 1, itemList.size())-1;
+		if(sel == -1) {
+			return;
+		}
 		cDAO.addCartData(user.getId(),itemList.get(sel).getName());
 		System.out.println(itemList.get(sel) + "장바구니 담기 완료");
 	}
@@ -36,12 +40,6 @@ public class ItemDAO {
 			data += list.getData();
 		}
 		return data;
-	}
-	public void categoriManager() {
-		String cate = InputManager.getValue("[카테관리]카테고리 입력:");
-		for(Item list :itemList) {
-
-		}
 	}
 	private Item getItemByName(String name) {
 		for(Item list : itemList) {
@@ -72,10 +70,7 @@ public class ItemDAO {
 		}
 	}
 	public void deleteItem(CartDAO cDAO) {
-		if(hasData()) {
-			System.out.println("데이터가 없습니다.");
-			return;
-		}
+		if(hasData())return;
 		String itemName = InputManager.getValue("[아이템삭제]아이템이름 :");
 		Item item = getItemByName(itemName);
 		if(item == null) {
@@ -84,5 +79,25 @@ public class ItemDAO {
 		}
 		itemList.remove(item);
 		System.out.println("[아이템 삭제 완료]");
+	}
+	public void printListByCategory() {
+		if(hasData())return;
+		String cate = InputManager.getValue("[카테고리]이름 입력:");
+		for(Item list :itemList) {
+			if(list.getCate().equals(cate)) {
+				System.out.println(list);
+			}
+		}
+	}
+	public void deleteCategory(CartDAO cDAO) {
+		if(hasData())return;
+		String cate = InputManager.getValue("[카테고리삭제]이름 입력");
+		for(int i=0; i < itemList.size() ; i++) {
+			if(itemList.get(i).getCate().equals(cate)) {
+				cDAO.deleteAllCartListByItemName(itemList.get(i).getName());
+				itemList.remove(i);
+				i-=1;
+			}
+		}
 	}
 }

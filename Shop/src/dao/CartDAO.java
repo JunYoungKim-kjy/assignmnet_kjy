@@ -91,4 +91,12 @@ public class CartDAO {
 			cartList.add(cart);
 		}
 	}
+	public void deleteAllCartListByItemName(String name) {
+		for(int i=0; i < cartList.size(); i+=1) {
+			if(cartList.get(i).getUserId().equals(name)) {
+				cartList.remove(i);
+				i-=1;
+			}
+		}
+	}
 }

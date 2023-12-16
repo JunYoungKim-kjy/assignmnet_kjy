@@ -90,7 +90,8 @@ public class ShopController {
 		}
 	}
 	private void adminMenu() {
-		printAdminMenu();
+//		printAdminMenu();
+		System.out.println("[1.아이템관리] [2.카테고리관리] [3.장바구니관리] [4.유저관리] [0.뒤로가기] ");
 		int sel = InputManager.getValue("[관리자메뉴]메뉴입력", 0, 4);
 		if(sel == 0) {
 			System.out.println("종료");
@@ -98,7 +99,7 @@ public class ShopController {
 		}else if(sel == 1) {//아이템관리
 			itemManager();
 		}else if(sel == 2) {//카테고리관리
-			iDAO.categoriManager();
+			categoriManager();
 		}else if(sel == 3) {//장바구니관리
 //			basketManager();
 		}else if(sel == 4) {//유저목록관리
@@ -107,7 +108,7 @@ public class ShopController {
 	}
 	private void itemManager() {
 		System.out.println("[1.아이템 추가] [2. 아이템 삭제] [0.뒤로가기]");
-		int sel = InputManager.getValue("[관리자메뉴]메뉴입력", 0, 2);
+		int sel = InputManager.getValue("[아이템 관리]메뉴입력", 0, 2);
 		if(sel == 0) {
 			System.out.println("종료");
 			return;
@@ -117,6 +118,19 @@ public class ShopController {
 			iDAO.deleteItem(cDAO);
 		}
 	}
+	private void categoriManager() {
+		System.out.println("[1.카테고리별 목록] [2.카테고리 삭제] [0.뒤로가기]");
+		int sel = InputManager.getValue("[카테고리 관리]메뉴입력", 0, 2);
+		if(sel == 0) {
+			System.out.println("종료");
+			return;
+		}else if(sel == 1) {//카테고리별 목록
+			iDAO.printListByCategory();
+		}else if(sel == 2) {//카테고리 전체 삭제
+			iDAO.deleteCategory(cDAO);
+		}
+	}
+	
 	private void printMenu() {
 
 		System.out.println("[1.가입]");
