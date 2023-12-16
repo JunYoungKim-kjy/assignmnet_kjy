@@ -12,6 +12,12 @@ public class ItemDAO {
 	public ItemDAO(){
 		itemList = new ArrayList<Item>();
 	}
+	private boolean hasData() {
+		if(itemList.size() == 0){
+			return true;
+		}
+		return false;
+	}
 	private void printItemList() {
 		int num = 1;
 		for(Item list : itemList) {
@@ -64,5 +70,19 @@ public class ItemDAO {
 			Item item = new Item(info[0], Integer.parseInt(info[1]),info[2]);
 			itemList.add(item);
 		}
+	}
+	public void deleteItem(CartDAO cDAO) {
+		if(hasData()) {
+			System.out.println("데이터가 없습니다.");
+			return;
+		}
+		String itemName = InputManager.getValue("[아이템삭제]아이템이름 :");
+		Item item = getItemByName(itemName);
+		if(item == null) {
+			System.out.println("아이템이 존재하지 않습니다.");
+			return;
+		}
+		itemList.remove(item);
+		System.out.println("[아이템 삭제 완료]");
 	}
 }

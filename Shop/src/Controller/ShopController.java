@@ -96,13 +96,25 @@ public class ShopController {
 			System.out.println("종료");
 			return;
 		}else if(sel == 1) {//아이템관리
-			iDAO.insertItem();
+			itemManager();
 		}else if(sel == 2) {//카테고리관리
 			iDAO.categoriManager();
 		}else if(sel == 3) {//장바구니관리
 //			basketManager();
 		}else if(sel == 4) {//유저목록관리
 //			userListManager();
+		}
+	}
+	private void itemManager() {
+		System.out.println("[1.아이템 추가] [2. 아이템 삭제] [0.뒤로가기]");
+		int sel = InputManager.getValue("[관리자메뉴]메뉴입력", 0, 2);
+		if(sel == 0) {
+			System.out.println("종료");
+			return;
+		}else if(sel == 1) {//아이템추가
+			iDAO.insertItem();
+		}else if(sel == 2) {//아이템삭제ㅔ
+			iDAO.deleteItem(cDAO);
 		}
 	}
 	private void printMenu() {
