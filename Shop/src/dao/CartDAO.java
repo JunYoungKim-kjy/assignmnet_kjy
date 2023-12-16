@@ -99,4 +99,15 @@ public class CartDAO {
 			}
 		}
 	}
+	public void printCartListUpToDate() {
+		if (cartList.size() == 0) {
+			System.out.println("주문 정보가 없습니다");
+			return;
+		}
+		System.out.printf("%s %s %n", "회원아이디", "상품 이름");
+		for (int i = cartList.size() - 1; i >= 0; i -= 1) {
+			System.out.printf("(%d) %s %s %n", cartList.size() - 1 - i, cartList.get(i).getUserId(), cartList.get(i).getItemName());
+		}
+
+	}
 }

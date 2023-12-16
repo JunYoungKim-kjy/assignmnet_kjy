@@ -66,6 +66,10 @@ public class UserDAO {
 		String id = InputManager.getValue("[로그인] 아이디입력  :");
 		String pw = InputManager.getValue("[로그인] 비밀번호입력 :");
 		User user = getUserById(id);
+		if(user == userList.get(0)) {
+			System.out.println("관리자메뉴로 접근해주세요");
+			return null;
+		}
 		if(user == null || !user.getPw().equals(pw)) {
 			System.out.println("회원정보가 일치하지않습니다.");
 			return null;
@@ -81,7 +85,19 @@ public class UserDAO {
 		System.out.println("정보가 일치하지 않습니다.");
 		return false;
 	}
-			
+	public void printUserList() {
+		for(User list : userList) {
+			System.out.println(list);
+		}
+	}
+	public void deleteUser(CartDAO cDAO) {
+		printUserList();
+		String id = InputManager.getValue("[유저삭제]아이디입력:");
+		User user = getUserById(id);
+		cDAO.deleteAllCartListByOneUser(id);
+		userList.remove(user);
+		System.out.println("유저 삭제 완료");
+	}
 	public String getData() {
 		String data = "";
 		for(User list : userList) {
