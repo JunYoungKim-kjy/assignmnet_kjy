@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Utils.InputManager;
 import vo.Cart;
@@ -42,9 +43,34 @@ public class CartDAO {
 		}
 		System.out.println("=============================");
 	}
-	public void printMyList(User user) {
+	public void printMyList(User user , ItemDAO iDAO) {
 		ArrayList<Cart> myList = getMyCartList(user);
-		myCartList(myList, user.getName());
+//		myCartList(myList, user.getName());
+		int itemCnt[] = new int[iDAO.itemList.size()];
+		int cnt = 0;
+		int total = 0;
+		for(Cart list : myList) {
+			int idx = 0;
+			for(Item item : iDAO.itemList) {
+				if(list.getItemName().equals(item.getName())) {
+					itemCnt[idx] +=1;
+					cnt +=1;
+					total += item.getPrice(); 
+				}
+				idx++;
+			}
+		}
+//		System.out.println(Arrays.toString(itemCnt));
+		System.out.printf("=======%s 님의 장바구니 ========\n",user.getName());
+		int num = 1;
+		int idx = 0;
+		for(Item item : iDAO.itemList) {
+			if(itemCnt[idx]!=0) {
+				System.out.printf("%d) %s \t%d원  %d개\n",num++,item.getName(),item.getPrice()*itemCnt[idx],itemCnt[idx]);
+			}
+			idx++;
+		}
+		System.out.printf("======= 총 갯수 %d 총 금액 %d원=======\n",cnt,total);
 	}
 	public String getData() {
 		String data = "";

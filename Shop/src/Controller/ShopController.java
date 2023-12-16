@@ -46,7 +46,7 @@ public class ShopController {
 			System.out.println("뒤로가기");
 			return;
 		}else if(sel == 1) { //내 장바구니
-			cDAO.printMyList(log);
+			cDAO.printMyList(log,iDAO);
 		}else if(sel == 2) { //삭제
 			cDAO.deleteMyCartList(log);
 		}else if(sel == 3) { //구입
