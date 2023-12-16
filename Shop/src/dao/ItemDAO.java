@@ -52,16 +52,18 @@ public class ItemDAO {
 		return null;
 	}
 	public void insertItem() {
+		printItemList();
 		String name = InputManager.getValue("[아이템추가]이름 입력: ");
 		Item item = getItemByName(name);
 		if(item != null) {
 			System.out.println("이미 존재하는 아이템 입니다.");
 			return;
 		}
-		String category = InputManager.getValue("[아이템추가]:카테고리 입력:");
+		String category = InputManager.getValue("[아이템추가]카테고리 입력:");
 		int price = InputManager.getValue("[아이템추가]가격 입력: ", 1, 99999);
 		item = new Item(name, price, category);
 		itemList.add(item);
+		System.out.println("아이템 추가 완료");
 	}
 	public void loadDataFromFile(String data) {
 		String temp[] = data.split("\n");
@@ -79,6 +81,7 @@ public class ItemDAO {
 			System.out.println("아이템이 존재하지 않습니다.");
 			return;
 		}
+		cDAO.deleteAllCartListByItemName(itemName);
 		itemList.remove(item);
 		System.out.println("[아이템 삭제 완료]");
 	}
@@ -93,6 +96,7 @@ public class ItemDAO {
 	}
 	public void deleteCategory(CartDAO cDAO) {
 		if(hasData())return;
+		printItemList();
 		String cate = InputManager.getValue("[카테고리삭제]이름 입력");
 		for(int i=0; i < itemList.size() ; i++) {
 			if(itemList.get(i).getCate().equals(cate)) {
