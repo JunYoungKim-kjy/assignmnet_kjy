@@ -85,7 +85,7 @@ public class CartDAO {
 			System.out.println("장바구니가 비어있습니다.");
 		}
 		myCartList(myList, user.getName());
-		int sel = InputManager.getValue("[구입]번호입력:", 1, myList.size())-1;
+		int sel = InputManager.getValue("[구입]번호입력:", 0, myList.size())-1;
 		if(sel == -1 )return;
 		cartList.remove(myList.get(sel));
 		System.out.println(myList.get(sel).getItemName() + "구매 완료");
@@ -100,9 +100,8 @@ public class CartDAO {
 			System.out.print(num++ + " ");
 			System.out.println(ml);
 		}
-		int sel = InputManager.getValue("[삭제]번호입력:", 1, myList.size())-1;
+		int sel = InputManager.getValue("[삭제]번호입력:", 0, myList.size())-1;
 		if(sel == -1) {
-			System.out.println("Error");
 			return;
 		}
 		cartList.remove(myList.get(sel));

@@ -27,12 +27,14 @@ public class ItemDAO {
 	}
 	public void shopping(User user, CartDAO cDAO) {
 		printItemList();
-		int sel = InputManager.getValue("[쇼핑]번호선택", 1, itemList.size())-1;
-		if(sel == -1) {
-			return;
+		while (true) {
+			int sel = InputManager.getValue("[쇼핑]번호선택", 0, itemList.size()) - 1;
+			if (sel == -1) {
+				return;
+			}
+			cDAO.addCartData(user.getId(), itemList.get(sel).getName());
+			System.out.println(itemList.get(sel) + "장바구니 담기 완료");
 		}
-		cDAO.addCartData(user.getId(),itemList.get(sel).getName());
-		System.out.println(itemList.get(sel) + "장바구니 담기 완료");
 	}
 	public String getData() {
 		String data = "";
